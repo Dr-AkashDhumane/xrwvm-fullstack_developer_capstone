@@ -58,12 +58,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'djangoproj.urls'
 
 
-# 🔹 UPDATED: Added frontend/static to template directories
+# 🔹 UPDATED: Added frontend/static and React build directories to template directories
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'frontend/static')
+            os.path.join(BASE_DIR, 'frontend/static'),
+            os.path.join(BASE_DIR, 'frontend/build'),
+            os.path.join(BASE_DIR, 'frontend/build/static'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -123,9 +125,11 @@ MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 MEDIA_URL = '/media/'
 
 
-# 🔹 UPDATED: Static files directory for frontend assets
+# 🔹 UPDATED: Static files directory for frontend assets including React build
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'frontend/static')
+    os.path.join(BASE_DIR, 'frontend/static'),
+    os.path.join(BASE_DIR, 'frontend/build'),
+    os.path.join(BASE_DIR, 'frontend/build/static'),
 ]
 
 

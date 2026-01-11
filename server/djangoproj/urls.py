@@ -1,4 +1,5 @@
-"""djangoproj URL Configuration
+"""
+djangoproj URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
@@ -13,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
@@ -20,7 +22,21 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    # Admin site
     path('admin/', admin.site.urls),
+
+    # Django app URLs
     path('djangoapp/', include('djangoapp.urls')),
-    path('', TemplateView.as_view(template_name="Home.html")),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+    # Home page
+    path('', TemplateView.as_view(template_name="Home.html"), name='home'),
+
+    # About Us static page
+    path('about/', TemplateView.as_view(template_name="About.html"), name='about'),
+
+    # Contact Us static page
+    path('contact/', TemplateView.as_view(template_name="Contact.html"), name='contact'),
+]
+
+# Serve static files during development
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,12 +1,22 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <title>About Us | Best Cars</title>
+
   <!-- Link the style sheet here -->
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
 </head>
+
+<body>
 <div>
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
     <div class="container-fluid">
       <h2 style="padding-right: 5%;">Dealerships</h2>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarText" aria-controls="navbarText"
+        aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
@@ -24,45 +34,63 @@
       </div>
     </div>
   </nav>
-  
-    <div class="card" style="width: 80%;margin: auto; margin-top:5%;">
-      <div class="banner" name="about-header">
+
+  <div class="card" style="width: 80%; margin: auto; margin-top:5%;">
+    <div class="banner text-center p-4" name="about-header">
       <!-- Insert header information here -->
-      </div>
-      <div style="display: flex;flex-direction: row; margin:auto">
+      <h1>About Us</h1>
+      <p class="lead">
+        Welcome to Best Cars dealership, home to the best cars in North America.
+        We specialize in selling both domestic and imported vehicles at competitive
+        prices, while delivering exceptional customer service nationwide.
+      </p>
+    </div>
+
+    <div style="display: flex; flex-direction: row; margin: auto; justify-content: space-around; padding-bottom: 30px;">
+
       <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.png" alt="Card image">
-        <div class="card-body">
-          <p class="title">Person1</p>
-          <p>Person1 Title</p>
-          <p class="card-text">Some text that explains the person1 in about 2 short sentences</p>
-          <p>person1@example.com</p>
+        <img class="card-img-top" src="/static/person.png" alt="CEO image">
+        <div class="card-body text-center">
+          <p class="title"><strong>John Smith</strong></p>
+          <p>Chief Executive Officer</p>
+          <p class="card-text">
+            John leads Best Cars with over 20 years of experience in the automotive
+            industry, focusing on growth, innovation, and customer satisfaction.
+          </p>
+          <p>john.smith@bestcars.com</p>
         </div>
       </div>
 
       <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.png" alt="Card image">
-        <div class="card-body">
-          <p class="title">Person2</p>
-          <p>Person2 Title</p>
-          <p class="card-text">Some text that explains the person2 in about 2 short sentences</p>
-          <p>person2@example.com</p>
+        <img class="card-img-top" src="/static/person.png" alt="CTO image">
+        <div class="card-body text-center">
+          <p class="title"><strong>Sarah Johnson</strong></p>
+          <p>Chief Technology Officer</p>
+          <p class="card-text">
+            Sarah oversees digital transformation at Best Cars, ensuring secure,
+            scalable, and customer-friendly technology solutions.
+          </p>
+          <p>sarah.johnson@bestcars.com</p>
         </div>
       </div>
 
       <div class="card" style="width: 30%;">
-        <img class="card-img-top" src="/static/person.png" alt="Card image">
-        <div class="card-body">
-          <p class="title">Person3</p>
-          <p>Person3 Title</p>
-          <p class="card-text">Some text that explains the person3 in about 2 short sentences</p>
-          <p>person3@example.com</p>
+        <img class="card-img-top" src="/static/person.png" alt="Operations Manager image">
+        <div class="card-body text-center">
+          <p class="title"><strong>Michael Lee</strong></p>
+          <p>Operations Manager</p>
+          <p class="card-text">
+            Michael manages dealership operations across the country, ensuring
+            efficiency, transparency, and excellent customer experiences.
+          </p>
+          <p>michael.lee@bestcars.com</p>
         </div>
       </div>
+
     </div>
-    </div>
-    </div>
-    
+  </div>
 </div>
 
+<script src="/static/bootstrap.bundle.min.js"></script>
+</body>
 </html>

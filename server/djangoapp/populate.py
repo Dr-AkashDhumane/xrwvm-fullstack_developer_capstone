@@ -1,2 +1,70 @@
+from .models import CarMake, CarModel
+
 def initiate():
-    print("Populate not implemented. Add data manually")
+    """
+    Populates the database with initial CarMake and CarModel data.
+    Assigns a dummy dealership_id to satisfy the NOT NULL constraint.
+    """
+    try:
+        # -------------------------------
+        # Define CarMake data
+        # -------------------------------
+        car_make_data = [
+            {"name": "NISSAN", "description": "Great cars. Japanese technology"},
+            {"name": "Mercedes", "description": "Great cars. German technology"},
+            {"name": "Audi", "description": "Great cars. German technology"},
+            {"name": "Kia", "description": "Great cars. Korean technology"},
+            {"name": "Toyota", "description": "Great cars. Japanese technology"},
+        ]
+
+        # Create CarMake instances
+        car_make_instances = []
+        for data in car_make_data:
+            make_instance, created = CarMake.objects.get_or_create(
+                name=data['name'],
+                defaults={'description': data['description']}
+            )
+            car_make_instances.append(make_instance)
+
+        # -------------------------------
+        # Define CarModel data
+        # -------------------------------
+        car_model_data = [
+            {"name": "Pathfinder", "type": "SUV", "year": 2023, "car_make": car_make_instances[0]},
+            {"name": "Qashqai", "type": "SUV", "year": 2023, "car_make": car_make_instances[0]},
+            {"name": "XTRAIL", "type": "SUV", "year": 2023, "car_make": car_make_instances[0]},
+            {"name": "A-Class", "type": "SUV", "year": 2023, "car_make": car_make_instances[1]},
+            {"name": "C-Class", "type": "SUV", "year": 2023, "car_make": car_make_instances[1]},
+            {"name": "E-Class", "type": "SUV", "year": 2023, "car_make": car_make_instances[1]},
+            {"name": "A4", "type": "SUV", "year": 2023, "car_make": car_make_instances[2]},
+            {"name": "A5", "type": "SUV", "year": 2023, "car_make": car_make_instances[2]},
+            {"name": "A6", "type": "SUV", "year": 2023, "car_make": car_make_instances[2]},
+            {"name": "Sorrento", "type": "SUV", "year": 2023, "car_make": car_make_instances[3]},
+            {"name": "Carnival", "type": "SUV", "year": 2023, "car_make": car_make_instances[3]},
+            {"name": "Cerato", "type": "Sedan", "year": 2023, "car_make": car_make_instances[3]},
+            {"name": "Corolla", "type": "Sedan", "year": 2023, "car_make": car_make_instances[4]},
+            {"name": "Camry", "type": "Sedan", "year": 2023, "car_make": car_make_instances[4]},
+            {"name": "Kluger", "type": "SUV", "year": 2023, "car_make": car_make_instances[4]},
+        ]
+
+        # Dummy dealership ID to satisfy NOT NULL
+        DUMMY_DEALERSHIP_ID = 1
+
+        # Create CarModel instances
+        for data in car_model_data:
+            CarModel.objects.get_or_create(
+                name=data['name'],
+                car_make=data['car_make'],
+                dealership_id=DUMMY_DEALERSHIP_ID,
+                defaults={
+                    'type': data['type'],
+                    'year': data['year'],
+                    'color': 'Unknown',
+                    'price': 0.0
+                }
+            )
+
+        print("Database populated successfully.")
+
+    except Exception as e:
+        print(f"Error populating database: {e}")

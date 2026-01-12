@@ -6,19 +6,28 @@ from django.conf import settings
 app_name = 'djangoapp'
 
 urlpatterns = [
-    # User registration
+    # ---------------------------
+    # User endpoints
+    # ---------------------------
     path('register', views.registration, name='registration'),
-
-    # User login
     path('login', views.login_user, name='login'),
-
-    # User logout
     path('logout', views.logout_user, name='logout'),
 
-    # Get all cars (CarMakes and CarModels)
+    # ---------------------------
+    # Car endpoints
+    # ---------------------------
     path('get_cars', views.get_cars, name='getcars'),
 
-    # Placeholder paths for dealer reviews and add review (future)
-    # path('dealer_reviews/<int:dealer_id>/', views.get_dealer_reviews, name='dealer_reviews'),
-    # path('add_review/', views.add_review, name='add_review'),
+    # ---------------------------
+    # Dealer endpoints
+    # ---------------------------
+    path('get_dealers', views.get_dealerships, name='get_dealers'),
+    path('get_dealers/<str:state>', views.get_dealerships, name='get_dealers_by_state'),
+    path('dealer/<int:dealer_id>', views.get_dealer_details, name='dealer_details'),
+    path('reviews/dealer/<int:dealer_id>', views.get_dealer_reviews, name='dealer_reviews'),
+
+    # ---------------------------
+    # Review submission
+    # ---------------------------
+    path('add_review', views.add_review, name='add_review'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

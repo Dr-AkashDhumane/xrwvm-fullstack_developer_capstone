@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from .models import CarMake, CarModel
 from .populate import initiate
+from .restapis import get_request, analyze_review_sentiments, post_review
 import json
 import logging
 
@@ -80,7 +81,6 @@ def registration(request):
 # ---------------------------
 def get_cars(request):
     try:
-        # Populate DB if empty
         if CarMake.objects.count() == 0:
             print("CarMake table empty, populating database...")
             initiate()
@@ -99,3 +99,65 @@ def get_cars(request):
     except Exception as e:
         logger.error(f"Error fetching cars: {e}")
         return JsonResponse({"status": "fail", "message": "Error fetching cars"})
+
+
+# ---------------------------
+# Get all dealerships (optionally filter by state)
+# ---------------------------
+def get_dealerships(request, state="All"):
+    if state == "All":
+        endpoint = "/fetchDealers"
+    else:
+        endpoint = f"/fetchDealers/{state}"
+    
+    dealerships = get_request(endpoint)
+    return JsonResponse({"status": 200, "dealers": dealerships})
+
+
+# ---------------------------
+# Get dealer details by dealer_id
+# ---------------------------
+def get_dealer_details(request, dealer_id):
+    if dealer_id:
+        endpoint = f"/fetchDealer/{dealer_id}"
+        dealership = get_request(endpoint)
+        return JsonResponse({"status": 200, "dealer": dealership})
+    else:
+        return JsonResponse({"status": 400, "message": "Bad Request"})
+
+
+# ---------------------------
+# Get dealer reviews with sentiment analysis
+# ---------------------------
+def get_dealer_reviews(request, dealer_id):
+    if dealer_id:
+        endpoint = f"/fetchReviews/dealer/{dealer_id}"
+        reviews = get_request(endpoint)
+
+        if reviews:
+            for review_detail in reviews:
+                sentiment = analyze_review_sentiments(review_detail['review'])
+                review_detail['sentiment'] = sentiment
+        
+        return JsonResponse({"status": 200, "reviews": reviews})
+    else:
+        return JsonResponse({"status": 400, "message": "Bad Request"})
+
+
+# ---------------------------
+# Submit a review to backend (authenticated users only)
+# ---------------------------
+@csrf_exempt
+def add_review(request):
+    if not request.user.is_anonymous:
+        try:
+            data = json.loads(request.body)
+            response = post_review(data)
+            if response:
+                return JsonResponse({"status": 200, "message": "Review posted successfully", "response": response})
+            else:
+                return JsonResponse({"status": 500, "message": "Failed to post review"})
+        except Exception as e:
+            return JsonResponse({"status": 401, "message": f"Error in posting review: {str(e)}"})
+    else:
+        return JsonResponse({"status": 403, "message": "Unauthorized"})
